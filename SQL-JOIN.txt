@@ -1,0 +1,104 @@
+#2025 - April 05 
+
+-- Join 
+-- Combine two or more tables to get informations 
+
+-- Like 
+-- Customer  , Product and Orders
+-- Author , Books 
+-- teacher , Students 
+-- Course , Purchase , Students 
+
+-- Left join , Right Join , Full outer join ( left join union Right join ) 
+-- Inner join ( join ) and self join, cross join 
+
+Union - Combine rows from both queries. No duplicates.
+Intersect - keep only rows that are common in both queries.
+Except- keep rows only from left query that are not present in right query.
+
+-- Union
+-- table -A  
+-- 1
+-- 2 
+-- 3 
+-- 4 
+-- 5 
+-- Table -B
+-- 7
+-- 4
+-- 8
+-- 5 
+( A union B ) -> 1,2,3,4,5,7,8
+( A union all B) -> 1,2,3,4,5,7,4,8,5
+
+INTERSECT -> 4, 5
+except ->  1 , 2 , 3
+
+-- Ralationships 
+-- One to One  
+-- One to Many 
+-- Many to One 
+-- Many to Many 
+
+
+-- One to One 
+-- eg.. 1 Customer -> customer support 
+-- 1:1 session 
+
+-- Students ( id, name ,course ) 
+-- project ( id, stu_id, data, submited_date )
+
+
+1. One-to-One (1:1)
+Each row in Table A relates to one and only one row in Table B.
+
+📌 Example: Person ↔ Passport
+
+Person_ID	Name	Passport_ID	Passport_Number
+1	Alice	101	X1234567
+2	Bob	102	Y9876543
+3	Charlie	103	Z5432167
+4	Diana	104	A1357924
+5	Edward	105	B2468135
+
+
+2. One-to-Many (1:N)
+One row in Table A can relate to many rows in Table B.
+
+📌 Example: Customer → Orders
+Customer_ID	Name	Order_ID	Product
+1	John	201	Laptop
+1	John	202	Mouse
+2	Alice	203	Monitor
+3	Michael	204	Keyboard
+3	Michael	205	USB Cable
+
+
+3. Many-to-One (N:1)
+Many rows in Table A relate to one row in Table B (inverse of 1:N).
+
+📌 Example: Employee → Department
+
+Employee_ID	Name	Dept_ID	Department
+101	Rahul	10	HR
+102	Sneha	20	IT
+103	Arjun	20	IT
+104	Kavya	10	HR
+105	Sameer	30	Finance
+
+
+4. Many-to-Many (M:N)
+Multiple rows in Table A relate to multiple rows in Table B using a junction table.
+
+📌 Example: Student ↔ Courses
+
+Student_ID	Name	Course_ID	Course_Name
+1	Aanya	301	Math
+1	Aanya	302	Physics
+2	Rohan	301	Math
+2	Rohan	303	Chemistry
+3	Meera	302	Physics
+
+
+
+

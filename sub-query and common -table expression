@@ -1,0 +1,72 @@
+
+-- 2025 - 07 - 22 
+use rock_sql;
+
+show tables
+
+select * from e_dataset;
+select * from emp_sal;
+select * from students;
+
+-- find duplicate records 
+select _name, _email 
+from Students group by _name, _email  having count(*) >1;
+
+select _name
+from Students group by _name having count(*) >1;
+
+select _email 
+from Students group by _email  having count(*) >1;
+
+
+select * from students;
+select _status ,count(_status)
+from Students group by _status  having count(*) >1;
+-- Sub query 
+select _name, _email 
+from Students where _status in(
+select _status 
+from Students group by _status  having count(*) >1);
+
+-- Common table expression 
+with etc as (
+select _status ,count(_status)
+from Students group by _status  having count(*) >1
+)
+-- select * from etc;
+
+select _name, _email 
+from Students where _status in(select _status from etc ) 
+
+
+
+
+use my_db;
+show tables;
+
+select * from orders;
+select * from users;
+
+--  Find customer all info who placed more than one order .
+
+-- step:-1 
+with more_than_order as (
+select o.UserId , count(o.UserId) as total_odres
+from Orders as o 
+join Users as u on u.UserId = o.UserId
+group by UserId having count(o.UserId) > 1
+) 
+
+select * from users where UserId in ( select UserId from more_than_order ) 
+
+
+-- step:- 2 
+
+
+with more_than_order as (
+select o.UserId , count(o.UserId) as total_odres
+from Orders as o 
+group by UserId having count(o.UserId) > 1
+) 
+
+select * from users where UserId in ( select UserId from more_than_order ) 

@@ -1,0 +1,60 @@
+#2025 - 07 - 14
+ use my_db;
+ 
+ show tables;
+ 
+--  alter table employeesalary rename to emp_salary;
+
+rename table emp_salary to emp_sal;
+
+show tables;
+
+-- tabels 
+-- dataset links:- https://www.kaggle.com/datasets/mikhail1681/walmart-sales
+select * from train;
+
+-- check null value 
+select * from train where `Order Id` is null or
+`Order Date` is null or 
+`Ship Date` is null or 
+`Ship Mode` is null or 
+`Customer ID` is null or 
+city is null or 
+state is null or 
+`Postal Code` is null or  
+`Product ID`is null or   Category is null or 
+`Sub-Category` is null or  `Product Name` is null or  
+Sales is null  ;
+
+select * from train;
+
+--  find the number of unique categry 
+select Category , count(Category) as total 
+from train group by Category;
+
+--  find the total number of unique sales for each categry and sub-category 
+select Category ,`Sub-Category`, count(Category) as total ,count(`Sub-Category`) as total_subcategory
+from train group by Category,`Sub-Category`
+order by total asc,total_subcategory asc;
+
+-- FIND HIGHEST SALES FOR EACH SUB-CATEGORY 
+
+SELECT `Sub-Category`, COUNT(sales) as total , min(sales) as minimun , 
+max(sales) as maximum , avg(sales) as average, sum(sales) as total_profit 
+from train group by `Sub-Category` order by total_profit desc;
+ 
+ 
+ -- FIND top 8 HIGHEST SALling prices FOR EACH SUB-CATEGORY 
+
+SELECT `Sub-Category`, COUNT(sales) as total , min(sales) as minimun , 
+max(sales) as maximum , avg(sales) as average, sum(sales) as total_profit 
+from train group by `Sub-Category` order by total_profit desc limit 8;
+ 
+ -- offset 
+ 
+ -- FIND top 8 HIGHEST SALling prices FOR EACH SUB-CATEGORY 
+
+SELECT `Sub-Category`, COUNT(sales) as total , min(sales) as minimun , 
+max(sales) as maximum , avg(sales) as average, sum(sales) as total_profit 
+from train group by `Sub-Category` order by total_profit desc limit 8 offset 1;
+ 

@@ -1,0 +1,122 @@
+
+-- mysql
+-- postgresql 
+-- oracal
+-- 
+
+-- class name is rock-sql 
+
+-- create database 
+-- create database rock_sql;
+-- if exists 
+ 
+ create database if not exists rock_sql;
+ create database if not exists rock_sql1;
+ 
+ -- first step 
+ use rock_sql;
+ 
+  -- primary key or ( unique and not null) 
+  
+ create table if not exists students(
+ _id int primary key auto_increment,
+_name varchar(30) not null,
+_email varchar(50) not null,
+_status char(2) not null,
+_des text  
+ );
+ 
+ show tables;
+ -- second step 
+  create table if not exists rock_sql1.students(
+ _id int primary key auto_increment,
+_name varchar(30) not null,
+_email varchar(50) not null,
+_status char(2) not null,
+_des text  
+ );
+ 
+ 
+ show tables;
+ 
+ describe students;
+ 
+ -- rename this _des column to _description
+ 
+--  select _des from students rename _description;
+ 
+ alter table students rename column _des to _description;
+ 
+ describe students;
+
+-- I want to drop column _status 
+alter table students drop column _status;
+
+-- I want to change data types of _description columns to varchar(30)
+Alter table students modify column _description varchar(30);
+
+ describe students;
+ 
+ -- DML 
+ -- select 
+ -- insert 
+ -- update 
+ -- delete 
+ 
+ select * from  students;
+ 
+ INSERT INTO students(_name, _email, _status, _description) VALUES
+('Student_1', 'student1@example.com', 'B1', 'Description for student 1'),
+('Student_2', 'student2@example.com', 'C1', 'Description for student 2'),
+('Student_3', 'student3@example.com', 'A1', 'Description for student 3'),
+('Student_4', 'student4@example.com', 'B1', 'Description for student 4'),
+('Student_5', 'student5@example.com', 'C1', 'Description for student 5'),
+('Student_6', 'student6@example.com', 'A1', 'Description for student 6'),
+('Student_7', 'student7@example.com', 'B1', 'Description for student 7'),
+('Student_8', 'student8@example.com', 'C1', 'Description for student 8'),
+('Student_9', 'student9@example.com', 'A1', 'Description for student 9'),
+('Student_10', 'student10@example.com', 'B1', 'Description for student 10'),
+('Student_11', 'student11@example.com', 'C1', 'Description for student 11'),
+('Student_12', 'student12@example.com', 'A1', 'Description for student 12'),
+('Student_13', 'student13@example.com', 'B1', 'Description for student 13'),
+('Student_14', 'student14@example.com', 'C1', 'Description for student 14'),
+('Student_15', 'student15@example.com', 'A1', 'Description for student 15'),
+('Student_16', 'student16@example.com', 'B1', 'Description for student 16'),
+('Student_17', 'student17@example.com', 'C1', 'Description for student 17'),
+('Student_18', 'student18@example.com', 'A1', 'Description for student 18'),
+('Student_19', 'student19@example.com', 'B1', 'Description for student 19'),
+('Student_20', 'student20@example.com', 'C1', 'Description for student 20'),
+('Student_100', 'student100@example.com', 'C1', 'Description for student 100');
+
+-- fetch tha data 
+select * from  students;
+
+-- I want to fetch the records who's students id is even
+
+select * from students where _id = 1;
+
+select * from students where _id %2= 0;
+
+-- I want to fetch the records of those students who's status is C1 and ID is odd 
+select * from students where _id <>0 and _status='C1'
+ 
+ -- AND 
+
+ -- 1  ,1  => 1 
+ -- 1 , 0  => 0 
+ -- 0  , 1 => 0
+ -- 0 , 0 => 0
+ 
+ -- OR 
+ 
+  -- 1  ,1  => 1 
+ -- 1 , 0  => 0 
+ -- 0  , 1 => 1
+ -- 0 , 0 => 0
+ 
+ -- NOT 
+ 
+  -- 1   => 0
+ -- 0  => 1
+ 
+ 

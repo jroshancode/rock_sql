@@ -1,0 +1,232 @@
+#2025-07-16 
+  use rock_sql;
+
+
+-- rename 
+rename table ecommerce_dataset_updated to e_datase;
+rename table e_datase to e_dataset;
+
+
+-- fetch the records ;- 
+select * from emp_sal;
+select * from students;
+select * from e_dataset;
+
+-- Find the  maximum sales from final_price(R.s)
+
+select * from e_dataset where `Final_Price(Rs.)` is maximum
+
+select max(`Final_Price(Rs.)`),min(`Final_Price(Rs.)`) from e_dataset;
+-- total number of records 
+select count(*) from e_dataset;
+-- total number of recods but this is also ingour null value 
+select count(`Discount (%)`) from e_dataset;
+
+describe e_dataset;
+
+select max(`Final_Price(Rs.)`),min(`Final_Price(Rs.)`) ,`Discount (%)` from e_dataset;
+
+
+-- total number of category 
+select category , count(Category) as total 
+from e_dataset group by Category order by total desc;
+
+-- find the max, min  ,avg , count , sum for each Category 
+
+select category, count(`Price (Rs.)`)  total_price ,
+avg(`Price (Rs.)`) as avg_price ,
+max(`Price (Rs.)`) as max_price,
+min(`Price (Rs.)`) as min_price,
+sum(`Price (Rs.)`) as t_price,
+
+count(`Discount (%)`)  as total_dicount,
+max(`Discount (%)`) ,
+min(`Discount (%)`) ,
+avg(`Discount (%)`) ,
+sum(`Discount (%)`),
+
+count(`Final_Price(Rs.)`)  as total_final_price,
+max(`Final_Price(Rs.)`) ,
+min(`Final_Price(Rs.)`) ,
+avg(`Final_Price(Rs.)`),
+sum(`Final_Price(Rs.)`)
+from e_dataset
+
+group by category 
+
+use my_db;
+show tables;
+
+select * from products ;
+select * from orders;
+select * from users;
+
+-- Join 
+-- left join, right join, inner join => join , selft join ,
+-- cross join , outer join
+
+-- left join ( all info from left table + matching records from right table)
+select * from orders;
+select * from users;
+
+select u.* , o.*
+from users as u 
+Left join orders as o  
+on o.UserID = u.UserID
+
+-- group by based on each user Id 
+
+select u.UserId,count(Quantity) , sum(Quantity),avg(Quantity)
+from users as u 
+Left join orders as o  
+on o.UserID = u.UserID
+group by u.UserId
+
+
+-- right join (  ( all info from right table + matching records from left table)
+
+select u.* , o.*
+from users as u 
+right join orders as o 
+on o.UserID = u.UserID
+
+
+select u.* , o.*
+from orders as o
+right join users as u
+on u.UserId = o.UserId
+
+
+-- Inner JOin ( Exact match from both table ) 
+
+select u.* , o.*
+from users as u 
+inner join orders as o
+on o.UserID = u.UserID
+
+--  from => join => where => group by => having => select => order by => limit or offset
+
+
+
+# 2025 - 07 - 17 
+
+
+
+use my_db;
+
+select * from products ;
+select * from orders;
+select * from users;
+
+-- left join ( all info from left table + matching records from right table)
+select * from orders;
+select * from users;
+
+select u.*,o.*
+from users as u 
+Left join orders as o  
+on o.UserID = u.UserID;
+
+
+-- right join (  ( all info from right table + matching records from left table)
+
+select u.* , o.*
+from users as u 
+right join orders as o 
+on o.UserID = u.UserID;
+
+
+select u.* , o.*
+from orders as o
+right join users as u
+on u.UserId = o.UserId;
+
+
+
+-- Inner JOin ( Exact match from both table ) 
+
+select u.* , o.*
+from users as u 
+inner join orders as o
+on o.UserID = u.UserID;
+
+-- Inner JOin ( Exact match from both table ) 
+
+select u.* , o.*
+from users as u 
+join orders as o
+on o.UserID = u.UserID;
+
+-- using left join and right join ( fetch exact math records ) 
+-- using where conditons 
+select u.*,o.*
+from users as u 
+Left join orders as o  
+on o.UserID = u.UserID where o.UserId is not null;
+
+
+select u.* , o.*
+from orders as o
+right join users as u
+on u.UserId = o.UserId where o.UserId is not null;
+
+
+-- self  join 
+
+select * from orders;
+
+
+-- Create table
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    manager_id INT
+);
+
+-- Insert sample data
+INSERT INTO employees (emp_id, emp_name, manager_id) VALUES
+(1, 'Alice', NULL),       -- Alice is the CEO (no manager)
+(2, 'Bob', 1),            -- Bob reports to Alice
+(3, 'Charlie', 1),        -- Charlie reports to Alice
+(4, 'David', 2),          -- David reports to Bob
+(5, 'Eve', 2),            -- Eve reports to Bob
+(6, 'Frank', 3);          -- Frank reports to Charlie
+
+
+select * from employees;
+
+-- emp_id , Emp_name , manager_id 
+
+
+-- emp_id , emp_name ( table => A ) 
+-- emp_name, manager_id ( table => B )
+select e1.* , e2.*
+from employees as e1 
+join employees as e2 on e2.manager_id =e1.emp_id;
+
+-- get employees name along with nanager name 
+
+SELECT 
+    e.emp_name AS Employee,
+    m.emp_name AS Manager
+FROM 
+    employees e
+left join
+    employees m ON e.manager_id = m.emp_id;
+
+select * from employees;
+
+
+-- Count number of emp for each manger id 
+select e2.manager_id,count(e1.emp_id) as total_number_of_employees
+from employees as e1 
+left join employees as e2 on e2.manager_id = e1.emp_id 
+group by e2.manager_id;
+
+select e2.manager_id,count(e1.emp_id) as total_number_of_employees
+from employees as e1 
+join employees as e2 on e2.manager_id = e1.emp_id 
+group by e2.manager_id;
+
+
+

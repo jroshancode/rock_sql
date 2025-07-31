@@ -1,0 +1,115 @@
+use my_db;
+
+select * from train;
+
+-- Lower or upper or length, char_length
+select `Customer Name`,upper(`Customer Name`), lower(`Customer Name`),
+length(`Customer Name`),char_length(`Customer Name`)
+from train
+
+-- left , rignt and concat 
+ 
+ select `Customer Name`, left(`Customer Name`,5),right(`Customer Name`,5), concat("abc"," ",`Customer Name`),
+ concat_ws(" ","abc",`Customer Name`,"Pqr")
+ from train;
+ 
+-- first letter is capital and rest of these small for Country
+select Country, upper(left(Country,1)) , lower(right(country,length(Country)-1)),
+concat_ws("" , upper(left(Country,1)) , lower(right(country,length(Country)-1)) ) 
+from train
+
+
+
+
+-- reverse , replace 
+select `Ship Date`,replace(`Ship Date`,'-','@'), Segment, reverse(Segment)
+from train
+
+-- Substring extraction & position 
+-- substr( string, pos,len) , substring(str,pos,len)
+select `Customer Name`, substr(`Customer Name`,2,20),
+substring(`Customer Name`,2,5)
+from train 
+
+-- First letter is capital and rest of these small for Customer Name 
+select `Customer Name`, concat_ws("",upper(substr(`Customer Name`,1,1)),
+lower(substr(`Customer Name`,2,length(`Customer Name`))) )
+from train 
+
+-- Searching 
+-- position, locate,instr
+select `Customer Name`, position(" " in `Customer Name`), locate(" " , `Customer Name`) ,
+instr(`Customer Name`," ") 
+from train
+
+select  position("@" in "abc@yahoo.com"), locate("." , "abc@yahoo.com") ,
+instr("abc@yahoo.com","com")
+
+-- trim ,ltrim, rtirm, lpad, rpad
+
+select trim("   dkfdj  "), rtrim("   dkfdj  "), ltrim("   dkfdj  ")
+-- select * from walmart_sales;
+
+-- use rock_sql;
+-- select * from e_dataset
+
+
+-- 2025 - 07-  29 
+use my_db;
+
+select * from housing_price;
+
+select LandUse, count(LandUse) 
+from housing_price group by LandUse
+
+-- Landuse 
+select LandUse , concat(upper(left(LandUse,1)),"",lower(right(LandUse,length(LandUse)-1)) ) 
+from housing_price
+
+select LandUse , concat(Upper(substr(Landuse,1,1)), lower(substring(Landuse,2,length(LandUse))) )
+from housing_price
+
+
+-- Search Months name( April and July )  in my Sale DaTE COLUMN 
+
+with month_name as ( 
+select SaleDate, SalePrice, locate("April",SaleDate) as april ,instr(SaleDate,"July") as july,
+PropertyAddress , TotalValue  , BuildingValue
+FROM housing_price ) 
+
+select * from month_name where april = 1 or july = 1
+
+select * from housing_price;
+
+select Purchase_Amount, round(Purchase_Amount,1),truncate(Purchase_Amount,1)
+from ecommerce_transactions
+
+
+
+
+use my_db;
+
+select * from employee_data;
+
+select count(*) from employee_data;
+alter table employee_data rename column AdEmail to email;
+-- get last three charactor form email fields
+select email , right(email,3) from employee_data;
+
+-- get the positin of @, . , com and in
+
+select * from (
+select email, position("@" in email) as a , locate(".",email) as b,instr(email,'in') as c,
+ instr(email,'com') d
+from employee_data ) as etc 
+where a is not null or b is not null or c is not null or d is not null
+
+-- select the domain name from the email column  and how many time occure these all domain name 
+select abc, count(abc) from ( 
+select email, substr(email,locate("@",email)+1,length(email)-4) as abc,
+locate("@",email) , length(email)-4
+from employee_data ) as etc 
+group by abc
+
+
+

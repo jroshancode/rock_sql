@@ -1,0 +1,93 @@
+#2025 - 07 - 15 
+
+ use my_db;
+ 
+ show tables;
+ 
+-- Join 
+
+-- what is cardinality 
+-- Ralationships 
+-- One to One  
+-- One to Many 
+-- Many to One 
+-- Many to Many 
+
+-- One to One 
+-- eg.. 1 Customer -> customer support 
+
+
+-- ✅ CREATE TABLE Statements
+ 
+ 
+ CREATE TABLE if not exists Users (
+    UserID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Email VARCHAR(100),
+    City VARCHAR(50),
+    SignupDate DATE 
+);
+
+CREATE TABLE if not exists Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(100),
+    Category VARCHAR(50),
+    Price DECIMAL(10,2),
+    InStock INT
+);
+
+CREATE TABLE if not exists Orders (
+    OrderID INT PRIMARY KEY,
+    UserID INT,
+    ProductID INT,
+    Quantity INT,
+    OrderDate DATE,
+    Status VARCHAR(50),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+show tables;
+-- 📝 INSERT INTO Statements
+
+-- Users
+INSERT INTO Users VALUES 
+(1, 'Rahul Sharma', 'rahul@gmail.com', 'Delhi', '2023-04-10'),
+(2, 'Aditi Mehra', 'aditi@gmail.com', 'Mumbai', '2023-05-15'),
+(3, 'Vikram Singh', 'vikram@hotmail.com', 'Bangalore', '2023-07-01'),
+(4, 'Neha Kapoor', 'neha@yahoo.com', 'Chennai', '2023-07-20'),
+(5, 'Arjun Verma', 'arjunverma@gmail.com', 'Kolkata', '2023-08-12');
+
+-- Products
+INSERT INTO Products VALUES
+(101, 'Wireless Mouse', 'Electronics', 499.00, 120),
+(102, 'Laptop Bag', 'Accessories', 899.00, 80),
+(103, 'USB-C Charger', 'Electronics', 699.00, 150),
+(104, 'Bluetooth Speaker', 'Electronics', 1499.00, 60),
+(105, 'Notebook Set', 'Stationery', 249.00, 200);
+
+-- Orders
+INSERT INTO Orders VALUES
+(1001, 1, 101, 2, '2023-08-01', 'Delivered'),
+(1002, 2, 103, 1, '2023-08-05', 'Shipped'),
+(1003, 3, 104, 1, '2023-08-07', 'Cancelled'),
+(1004, 1, 102, 1, '2023-08-08', 'Delivered'),
+(1005, 4, 105, 3, '2023-08-10', 'Processing');
+
+
+select * from Orders;
+-- select * from products;
+select * from users;
+
+-- Left Join , Right JOin 
+
+-- Left Join ( all info from left table + matching records from right talbe ) 
+
+select u.*,o.*
+from users as u
+left join Orders as o on o.UserId = u.UserId
+
+
+-- from => join => where => gropu by => having => select => order by => limit or offset
+
+-- right join , join => inner join

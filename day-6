@@ -1,0 +1,104 @@
+# 2025 - 07 - 18 
+
+  use my_db;
+
+select * from products ;
+select * from orders;
+select * from users;
+
+
+select * from employees;
+
+-- emp_id , Emp_name , manager_id 
+
+-- emp_id , emp_name ( table => A ) 
+-- emp_name, manager_id ( table => B )
+select e1.* , e2.*
+from employees as e1 
+join employees as e2 on e2.manager_id =e1.emp_id;
+
+-- get employees name along with nanager name 
+
+SELECT 
+    e.emp_name AS Employee,
+    m.emp_name AS Manager
+FROM 
+    employees e
+left join
+    employees m ON e.manager_id = m.emp_id;
+
+select * from employees;
+
+
+-- Count number of emp for each manger id 
+select e2.manager_id,count(e1.emp_id) as total_number_of_employees
+from employees as e1 
+left join employees as e2 on e2.manager_id = e1.emp_id 
+group by e2.manager_id;
+
+select e2.manager_id,count(e1.emp_id) as total_number_of_employees
+from employees as e1 
+join employees as e2 on e2.manager_id = e1.emp_id 
+group by e2.manager_id;
+
+-- union , insterset , except , cross join and full outer join 
+-- 1 
+-- 2 
+-- 3 
+-- 4 
+-- 5
+
+-- B =>
+-- 5 
+-- 7
+-- 8 
+-- 2
+
+select * from products ;
+select * from orders;
+select * from users;
+
+( select UserId from orders ) 
+union ( select UserId from users )  
+
+( select UserId from orders ) 
+intersect ( select UserId from users )  
+
+( select UserId from orders ) 
+except ( select UserId from users )  
+
+( select UserId from orders ) 
+union all( select UserId from users )  
+
+select u.* ,o.* 
+from users u cross join orders o 
+
+select * from employees;
+select * from products ;
+select * from orders;
+select * from users;
+-- case statement 
+-- 
+
+select * ,
+case when city ='Delhi' then 'capital of Bharat'
+else 'Other' end as 'New_column'
+from users;
+ 
+ -- for multiple conditons 
+select * ,
+case when city ='Delhi' then 'capital of Bharat'
+	when city='Kolkata' then 'old capital of bharat'
+else 'Other' end as 'New_column'
+from users;
+
+select *  from orders;
+select distinct status  from orders;
+
+select * , 
+case when status ='Delivered' then 'Cash on delivery'
+     when status ='Shipped' then 'UPI'
+     when status ='Cancelled' then 'Fault'
+     else 'Processing' end as 'New_stauts'
+from orders;
+ 

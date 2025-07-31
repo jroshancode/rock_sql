@@ -1,0 +1,85 @@
+
+xclusive OR (XOR). Show the countries that are big by area (more than 3 million) or big by population (more than 250 million) but not both. Show name, population and area.
+
+Australia has a big area but a small population, it should be included.
+Indonesia has a big population but a small area, it should be included.
+China has a big population and big area, it should be excluded.
+United Kingdom has a small population and a small area, it should be excluded.
+
+select name, population ,area 
+
+from world where (area > 3000000 and population <=250000000 ) 
+or ( area <= 3000000 and population > 250000000 ) 
+
+
+Show the name and population in millions and the GDP in billions for the countries of the continent 'South America'. Use the ROUND function to show the values to two decimal places.
+For Americas show population in millions and GDP in billions both to 2 decimal places.
+
+select name, round(population/1000000,2),round(gdp/1000000000 ,2)
+from world 
+where 
+-- population>1000000 and gdp > 1000000000 and 
+continent ="South America"
+
+
+use rock_sql;
+
+-- Find reporting hierarchy starting from a manager
+
+-- Sample table
+CREATE TABLE Emp_manager (
+    EmpID INT,
+    EmpName VARCHAR(50),
+    ManagerID INT
+);
+
+INSERT INTO Emp_manager VALUES
+(1, 'CEO', NULL),
+(2, 'Manager1', 1),
+(3, 'Manager2', 1),
+(4, 'Employee1', 2),
+(5, 'Employee2', 2),
+(6, 'Intern', 4);
+
+select * from Emp_manager;
+
+-- Recursive CTE
+WITH RecursiveCTE AS (
+    sELECT EmpID, EmpName, ManagerID, 1 AS rank_column
+    FROM Emp_manager
+    WHERE ManagerID IS NULL
+)
+with new_rec as (   
+select r.EmpID, r.EmpName,r.managerId,r.rank_column
+UNION ALL
+
+    SELECT e.EmpID, e.EmpName, e.ManagerID, r.Level + 1
+    FROM Emp_manager e
+    JOIN RecursiveCTE r ON e.ManagerID = r.EmpID
+    
+)
+SELECT * FROM new_rec;
+
+
+WITH recursive
+RecursiveCTE AS (
+    SELECT EmpID, EmpName, ManagerID, 1 AS Level
+    FROM Emp_manager
+    WHERE ManagerID IS NULL
+
+    UNION ALL
+
+    SELECT e.EmpID, e.EmpName, e.ManagerID, r.Level + 1
+    FROM Emp_manager e
+    join RecursiveCTE r ON e.ManagerID = r.EmpID
+)
+SELECT * FROM RecursiveCTE;
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,106 @@
+
+
+
+-- Data Types 
+
+-- Int , Varchar, text, boolean char ,string,date, time, datetime, current_timestamp
+
+
+-- Numeric Data Types  -> number ( decimal points, integers)
+
+-- Character Data Types -> varchar  ( store any kind of character)
+
+-- _Id , name , email , phone , salary , description
+
+-- Date/Time Data Types -> date/time, datetime, current_timestamp
+
+-- Binary Data Types -> True(1), False (0) 
+
+-- NULL Values  -> Null value
+
+-- #  Topic store data in specific column
+-- Form Validation , data validation, Columns validation 
+
+-- _Id , name , email , phone , salary , description
+
+
+-- where , gropup by , having , 
+-- aggreagation( max,min,sum,avg,count) , 
+-- ( !=,<> ) 
+-- ( in , not in ) , 
+-- ( is , is not ) , 
+-- between , exists,
+  -- Numerical  ( is  is not )
+-- Catogorical  ( is , is not )
+
+In MySQL, IS and IS NOT are used to compare NULL values 
+because = and != do not work with NULL.
+
+-- Limit and offset
+
+-- LIKE and WILD CARD 
+-- WILD CARD 
+-- _(underscore)   -> fixed postions 
+ 
+
+
+
+
+use sql_course;
+
+select * from bikeindia;
+select * from data_clean;
+select * from data_loan;
+select * from sales_data;
+
+select * from orders;
+select * from products;
+select * from customers;
+
+-- Sales data 
+select * from sales_data;
+
+-- Check null value 
+select * from sales_data 
+where Product is null or `Purchase Address` is null;
+
+select * from sales_data 
+where `Quantity Ordered` is null 
+or `Price Each` is null 
+or `Cost Price` is null 
+or turnover is null 
+or margin is null
+
+-- Number of proudct or Categories 
+select count(distinct product) as total_product,   
+count( distinct `catÃ©gorie`) as total_category    
+from sales_data;
+
+
+select product , count(Product) as total_product 
+from sales_data group by Product 
+order by total_product desc;
+
+select `catÃ©gorie` , count(`catÃ©gorie`) as total_cat
+from sales_data group by `catÃ©gorie` 
+order by total_cat desc;
+
+select * from sales_data;
+-- I wnat to top  5 highest salling product 
+-- Write a sql query to get top 5 highest salling  price product 
+
+SELECT 
+  product,
+  SUM(`price each` * `quantity ordered`) as total_sales,
+  sum(`Cost price`) as total_pirce ,
+  sum(turnover) as total_profit ,
+  sum(margin) as total_margin,
+  sum(`price each`) - sum(`Cost price`)
+  
+from sales_data
+group by product
+order by total_sales DESC limit 5 offset 1;
+
+-- Top highest selling price for each product without using limit
+
+

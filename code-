@@ -1,0 +1,93 @@
+
+-- windows 
+
+-- group by 
+-- having 
+
+use rock_sql;
+show tables;
+select * from students;
+
+-- I want to fetch the number of students for each status
+
+select _status, count(_name) total_students
+from students group by _status;
+
+-- YES 
+
+select distinct _status,
+count(_name) over (partition by _status) as total_students
+ 
+from students;
+
+with etc as (
+select _status,
+count(_name) over (partition by _status) as total_students,
+row_number() over ( partition by _status ) as rn
+from students )
+
+select * from etc where rn = 1;
+
+
+CREATE TABLE EmployeeSalary (
+ EmpID INT,
+ Salary INT,
+ Year INT
+);
+INSERT INTO EmployeeSalary VALUES
+(3, 50000, 2020),
+(3, 60000, 2022),
+(3, 65000, 2025),
+(3, 70000, 2026),
+(4, 70000, 2022),
+(4, 69000, 2024),
+(4, 71000, 2028);
+
+-- Q1: Find Employees with Increasing Salaries in 3 Consecutive Years
+select * from EmployeeSalary;
+
+
+select EmpID, year , Salary,
+row_number() over ( partition by EmpID ) as rn 
+from EmployeeSalary;
+
+-date_add(date_column , interval 1 year ) = date_column
+-- date_format
+
+select * from EmployeeSalary;
+
+select e1.*
+from EmployeeSalary as e1 
+join EmployeeSalary as e2 on e2.EmpID = e1.EmpID
+join EmployeeSalary as e3 on e3.EmpID = e2.EmpID
+where e1.year = e2.year + 1 and e2.year = e3.year + 1
+
+
+
+-- WITH RankedSalaries AS (
+--  SELECT *,
+--  ROW_NUMBER() OVER (PARTITION BY EmpID ORDER BY Year) AS rn
+--  FROM EmployeeSalary
+-- ),
+-- ConsecutiveSalaries AS (
+--  SELECT e1.EmpID
+--  FROM RankedSalaries e1
+--  JOIN RankedSalaries e2 ON e1.EmpID = e2.EmpID AND e1.rn = e2.rn - 1
+--  JOIN RankedSalaries e3 ON e2.EmpID = e3.EmpID AND e2.rn = e3.rn - 1
+--  WHERE e1.Salary < e2.Salary AND e2.Salary < e3.Salary
+-- )
+-- SELECT DISTINCT EmpID FROM ConsecutiveSalaries;
+
+SELECT 
+    e1.EmpID,
+    e1.Year AS Year1, e1.Salary AS Salary1,
+    e2.Year AS Year2, e2.Salary AS Salary2,
+    e3.Year AS Year3, e3.Salary AS Salary3
+FROM 
+    EmployeeSalary e1
+JOIN 
+    EmployeeSalary e2 ON e1.EmpID = e2.EmpID AND e2.Year = e1.Year + 1
+JOIN 
+    EmployeeSalary e3 ON e1.EmpID = e3.EmpID AND e3.Year = e1.Year + 2
+WHERE 
+    e1.Salary < e2.Salary AND e2.Salary < e3.Salary;

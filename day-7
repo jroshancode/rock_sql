@@ -1,0 +1,72 @@
+https://www.hackerrank.com/challenges/the-report/problem?isFullScreen=true
+
+#2025 - 07-19 
+
+  -- students => Id, Name,marks 
+
+-- Grade => Grade, min_mark , max_Mark
+-- Output:- 
+-- Name, Grade and Mark.
+-- order by desc grade 
+-- if grade more than 8 then order by name as asc
+-- if grade less than 8 then assigne students name as null value
+-- and grade sorted by desc order 
+-- marks asc 
+
+-- grade lower than 8 
+
+
+select s.name,s.marks,g.grade
+from Students as s
+join Grades as g 
+
+where s.Marks between g.min_mark and g.max_mark
+
+order by g.grade desc,
+
+case 
+when marks >=70 then name else marks 
+end asc
+
+-- select 
+-- case when marks >=70 then name else null end as name,
+-- case when marks >=90 then 10
+--      when marks >=80 then 9
+--      when marks >=70 then 8
+--      when marks >=60 then 7
+--      when marks >=50 then 6
+--      when marks >=40 then 5
+--      when marks >=30 then 4
+--      when marks >=20 then 3
+--      when marks >=10 then 2
+-- else 1 end as Grade, Marks
+
+-- from Students order by grade desc,
+-- case 
+-- when marks >=70 then name else marks 
+-- end asc
+
+
+https://leetcode.com/problems/customer-who-visited-but-did-not-make-any-transactions/?envType=study-plan-v2&envId=top-sql-50
+-- select * from Transactions 
+
+select customer_id , count(visit_id) as count_no_trans 
+from Visits 
+where visit_id not in(select visit_id from Transactions )
+
+group by customer_id
+
+
+https://leetcode.com/problems/article-views-i/description/?envType=study-plan-v2&envId=top-sql-50
+select distinct author_id as id
+
+from Views where author_id = viewer_id
+order by id asc
+
+-- select distinct a.author_id as id
+-- from Views a join Views as b 
+-- on b.viewer_id = a.author_id
+-- -- where a.author_id = b.viewer_id
+-- order by id asc
+
+https://leetcode.com/problems/replace-employee-id-with-the-unique-identifier/description/?envType=study-plan-v2&envId=top-sql-50
