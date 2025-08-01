@@ -1,0 +1,24 @@
+# 2025 - 08 - 01
+-- 1. Data Cleaning in MySQL
+
+-- a) Handling NULLs or Missing Values
+-- Find Null values
+-- Replace NULLs , or drop or delete records 
+
+-- b) Removing Duplicates
+SELECT column_name, COUNT(*) FROM your_table
+GROUP BY column_name
+HAVING COUNT(*) > 1;
+
+Delete duplicates (keep only one row):
+
+-- Fixing Formatting Issues , Convert to lowercase or uppercase:
+
+-- d) Standardizing Data
+UPDATE your_table
+SET country = 'United States'
+WHERE country IN ('USA', 'U.S.A.', 'US', 'United States of America');
+
+-- Data Handling in MySQL
+-- CRUD => Create , read , update and delete 
+
