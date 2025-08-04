@@ -1,65 +1,69 @@
 #2025 - 08 - 02
-use rock_sql;
-select * from e_dataset;
 
--- Age , count, sum,min amd max
+-- 1. Data Cleaning in MySQL
 
-select avg(`Price (Rs.)`) from e_dataset;
-select `Price (Rs.)`, avg(`Price (Rs.)`) from e_dataset; -- wrong
+-- a) Handling NULLs or Missing Values
 
-select avg(`Price (Rs.)`) , sum(`Price (Rs.)`)
-from e_dataset;
+-- Replace NULLs or or drop or delete records 
 
--- total number of records without ignore null 
-select count(*) from e_dataset;
+use my_db;
 
-select count(`Price (Rs.)`) from e_dataset;
+show tables;
+select * from ecommerce_transactions;
+select * from housing_price;
+select * from train;
+select * from employee_data;
+
+select * from train;
+
+alter table train modify column `Order Date` datetime;
+describe train;
+
+select * from train where `Order Date` = '2017-11-08'
+
+select * from housing_price where SaleDate is not null;
+
+-- 
+select now(), curdate(),current_time(), current_date(),current_timestamp(),curtime();
+
+select * from housing_price;
+
+-- year(), month(), days()
+select SaleDate,year(SaleDate),month(SaleDate),day(SaleDate) from housing_price;
+
+-- Get the records for specific year or month or day
+select `Order Date`,year(`Order Date`),month(`Order Date`),day(`Order Date`) from train 
+where year(`Order Date`) = 2016;
+
+select `Order Date`, dayofweek(`Order Date`) , dayofyear(`Order Date`) , hour(`Order Date`),minute(`Order Date`)
+, second(`Order Date`) , week(`Order Date`),weekday(`Order Date`), quarter(`Order Date`)
+from train;
+
+describe train;
 
 
-select Purchase_Amount, round(Purchase_Amount,1),truncate(Purchase_Amount,1)
-from my_db.ecommerce_transactions;
+select `Ship Date`,year(`Ship Date`),month(`Ship Date`),day(`Ship Date`) from train ;
 
--- ceil , floor , abs, sign 
-select `Price (Rs.)`, ceil(`Price (Rs.)`),floor(`Price (Rs.)`), abs(`Price (Rs.)`), 
-sign(`Price (Rs.)`)
-from e_dataset;
+select SaleDate, year(SaleDate), dayofweek(SaleDate),weekday(SaleDate) 
+from housing_price;
+select StartDate, year(StartDate),month(StartDate),day(StartDate) from employee_data;
 
---  / or // or % 
+-- -- Date format 
+select `Order Date`, date_format(`Order Date`,"%Y-%m-%d"), date_format(`Order Date`,"%W-%M-%Y"),
+date_format(`Order Date`,"%d-%m-%Y")
+from train;
 
-select `Price (Rs.)`, mod(`Price (Rs.)`,10) , `Price (Rs.)` % 10, `Price (Rs.)` / 10 
-from e_dataset;
+select `Order Date`,`Ship Date`, date_format(`Ship Date`,"%Y-%m-%d"), date_format(`Ship Date`,"%W-%M-%Y"),
+date_format(`Ship Date`,"%d-%m-%Y")
+from train;
 
--- power , square 
-select `Price (Rs.)`, power(`Price (Rs.)`,2), round(sqrt(`Price (Rs.)`) , 2) 
-from e_dataset;
-
-select * from my_db.ecommerce_transactions;
-
--- Get the records for avg and sum of amount for each category with round off 2 decimal place.
-
-select Product_Category , round(avg(Purchase_Amount),2) as average, 
-round(sum( Purchase_Amount),2) as total 
-from my_db.ecommerce_transactions group by Product_Category ;
+-- Str to date 
+select * from housing_price;
+select SaleDate, str_to_date(SaleDate,"%M %d,%Y"), date_format(SaleDate,"%W-%M-%Y"),
+date_format(SaleDate,"%d-%m-%Y")
+from housing_price;
+str_to_date()
 
 
--- Get the maximum and minimum amount for each category between 01-01-2023 to 31-12-2023
 
-select Product_Category, round(max(Purchase_Amount),2) as maximum
-,round(min(Purchase_Amount),2) as minimum
-from my_db.ecommerce_transactions where Transaction_date >'2023-01-01' and Transaction_date < '2023-12-31'
-group by Product_Category order by maximum, minimum desc;
 
--- Get the maximum and minimum amount for each category and purchase date between 01-01-2023 to 31-12-2023
-select Product_Category,Transaction_date, round(max(Purchase_Amount),2) as maximum
-,round(min(Purchase_Amount),2) as minimum
-from my_db.ecommerce_transactions where Transaction_date between '2023-01-01' and '2023-12-31'
-group by Product_Category , Transaction_date order by maximum, minimum desc
-
--- calculate final price 
-select `Price (Rs.)` , `Discount (%)`, round(
-( `Price (Rs.)` - (
-( `Price (Rs.)`* `Discount (%)`) / 100) ) ,2 ) 
-,`Final_Price(Rs.)`
-from e_dataset;
-
-select count(*) from my_db.employee_data
