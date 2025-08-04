@@ -46,3 +46,9 @@ including SELECT, FROM, WHERE, HAVING, INSERT, UPDATE, and DELETE.
 # 2025 - 07 - 29 
 https://www.kaggle.com/datasets/ravindrasinghrana/employeedataset
 
+
+#2025 - 08 - 04 
+
+https://leetcode.com/problems/delete-duplicate-emails/description/?envType=study-plan-v2&envId=top-sql-50
+
+
