@@ -1,0 +1,65 @@
+#2025 - 08 - 02
+use rock_sql;
+select * from e_dataset;
+
+-- Age , count, sum,min amd max
+
+select avg(`Price (Rs.)`) from e_dataset;
+select `Price (Rs.)`, avg(`Price (Rs.)`) from e_dataset; -- wrong
+
+select avg(`Price (Rs.)`) , sum(`Price (Rs.)`)
+from e_dataset;
+
+-- total number of records without ignore null 
+select count(*) from e_dataset;
+
+select count(`Price (Rs.)`) from e_dataset;
+
+
+select Purchase_Amount, round(Purchase_Amount,1),truncate(Purchase_Amount,1)
+from my_db.ecommerce_transactions;
+
+-- ceil , floor , abs, sign 
+select `Price (Rs.)`, ceil(`Price (Rs.)`),floor(`Price (Rs.)`), abs(`Price (Rs.)`), 
+sign(`Price (Rs.)`)
+from e_dataset;
+
+--  / or // or % 
+
+select `Price (Rs.)`, mod(`Price (Rs.)`,10) , `Price (Rs.)` % 10, `Price (Rs.)` / 10 
+from e_dataset;
+
+-- power , square 
+select `Price (Rs.)`, power(`Price (Rs.)`,2), round(sqrt(`Price (Rs.)`) , 2) 
+from e_dataset;
+
+select * from my_db.ecommerce_transactions;
+
+-- Get the records for avg and sum of amount for each category with round off 2 decimal place.
+
+select Product_Category , round(avg(Purchase_Amount),2) as average, 
+round(sum( Purchase_Amount),2) as total 
+from my_db.ecommerce_transactions group by Product_Category ;
+
+
+-- Get the maximum and minimum amount for each category between 01-01-2023 to 31-12-2023
+
+select Product_Category, round(max(Purchase_Amount),2) as maximum
+,round(min(Purchase_Amount),2) as minimum
+from my_db.ecommerce_transactions where Transaction_date >'2023-01-01' and Transaction_date < '2023-12-31'
+group by Product_Category order by maximum, minimum desc;
+
+-- Get the maximum and minimum amount for each category and purchase date between 01-01-2023 to 31-12-2023
+select Product_Category,Transaction_date, round(max(Purchase_Amount),2) as maximum
+,round(min(Purchase_Amount),2) as minimum
+from my_db.ecommerce_transactions where Transaction_date between '2023-01-01' and '2023-12-31'
+group by Product_Category , Transaction_date order by maximum, minimum desc
+
+-- calculate final price 
+select `Price (Rs.)` , `Discount (%)`, round(
+( `Price (Rs.)` - (
+( `Price (Rs.)`* `Discount (%)`) / 100) ) ,2 ) 
+,`Final_Price(Rs.)`
+from e_dataset;
+
+select count(*) from my_db.employee_data
