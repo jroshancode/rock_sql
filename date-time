@@ -65,5 +65,95 @@ from housing_price;
 str_to_date()
 
 
+#2025 - 08-04 
+
+
+-- 1. Data Cleaning in MySQL
+
+-- a) Handling NULLs or Missing Values
+
+-- Replace NULLs or or drop or delete records 
+
+use my_db;
+
+show tables;
+select * from ecommerce_transactions;
+select * from housing_price;
+select * from train;
+select * from employee_data;
+
+select * from train;
+
+
+alter table train modify column `Order Date` datetime;
+describe train;
+
+select * from train where `Order Date` = '2017-11-08'
+
+select * from housing_price where SaleDate is not null;
+
+-- 
+select now(), curdate(),current_time(), current_date(),current_timestamp(),curtime();
+
+select * from housing_price;
+
+-- year(), month(), days()
+select SaleDate,year(SaleDate),month(SaleDate),day(SaleDate) from housing_price;
+
+-- Get the records for specific year or month or day
+select `Order Date`,year(`Order Date`),month(`Order Date`),day(`Order Date`) from train 
+where year(`Order Date`) = 2016;
+
+select dayofweek(now()),dayofyear(now()),hour(now()),minute(now()),second(now()),week(now()),weekday(now()),quarter(now()),
+year(now()),month(now()),day(now())
+
+select `Order Date`, dayofweek(`Order Date`) , dayofyear(`Order Date`) , hour(`Order Date`),minute(`Order Date`)
+, second(`Order Date`) , week(`Order Date`),weekday(`Order Date`), quarter(`Order Date`)
+from train;
+
+describe train;
+
+select `Ship Date`,year(`Ship Date`),month(`Ship Date`),day(`Ship Date`) from train ;
+
+select SaleDate, year(SaleDate), dayofweek(SaleDate),weekday(SaleDate) 
+from housing_price;
+
+select StartDate, year(StartDate),month(StartDate),day(StartDate) from employee_data;
+
+-- -- Date format 
+select `Order Date`, date_format(`Order Date`,"%Y-%m-%d"), date_format(`Order Date`,"%W-%M-%Y"),
+date_format(`Order Date`,"%d-%m-%Y"),DAYNAME(`Order Date`),date_format(`Order Date`,"%a")
+from train;
+
+select `Order Date`,`Ship Date`, date_format(`Ship Date`,"%Y-%m-%d"), date_format(`Ship Date`,"%W-%M-%Y"),
+date_format(`Ship Date`,"%d-%m-%Y")
+from train;
+
+-- Str to date -- str_to_date()
+select * from housing_price;
+select SaleDate, str_to_date(SaleDate,"%M %d,%Y"), date_format(SaleDate,"%W-%M-%Y"),
+date_format(SaleDate,"%d-%m-%Y");
+
+-- now first changed str to date the date format
+select SaleDate,str_to_date(SaleDate,"%M %d,%Y"), date_format(str_to_date(SaleDate,"%M %d,%Y"),"%d-%m-%Y %h:%i:%s %p")
+, date_format(SaleDate,"%W-%M-%Y"),
+date_format(SaleDate,"%d-%m-%Y")
+from housing_price;
+
+-- Add new column in housing_price\
+alter table housing_price add column new_date datetime;
+
+describe housing_price;
+-- updated the new_date colum vlaue by SaleDate. 
+
+update housing_price set new_date = str_to_date(SaleDate,"%M %d,%Y");
+select * from housing_price;
+
+
+
+
+
+
+
 
 
