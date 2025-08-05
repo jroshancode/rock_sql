@@ -144,7 +144,7 @@ from housing_price;
 alter table housing_price add column new_date datetime;
 
 describe housing_price;
--- updated the new_date colum vlaue by SaleDate. 
+-- updated the new_date column value by SaleDate column. 
 
 update housing_price set new_date = str_to_date(SaleDate,"%M %d,%Y");
 select * from housing_price;
