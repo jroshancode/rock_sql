@@ -52,3 +52,40 @@ https://www.kaggle.com/datasets/ravindrasinghrana/employeedataset
 https://leetcode.com/problems/delete-duplicate-emails/description/?envType=study-plan-v2&envId=top-sql-50
 
 
+#2025 - 08 - 05 
+https://leetcode.com/problems/delete-duplicate-emails/?envType=study-plan-v2&envId=top-sql-50
+
+-- delete p1 from Person as p1 
+-- join ( 
+--     select email, min(id) as id from Person group by email
+-- ) as etc
+
+-- on etc.email = p1.email and p1.id <> etc.id
+
+
+-- with etc as ( 
+--     select email, min(id) as id from Person group by email
+-- )
+
+-- delete from Person where id not in( 
+--     select id from etc
+-- )
+
+
+-- with etc as ( 
+--     select min(id) as id from Person group by email
+-- )
+
+-- delete from Person where id not in( 
+--     select id from etc
+-- )
+
+
+-- delete from Person where id not in( 
+--     select * from ( 
+--        select min(id) as id from Person group by email 
+--        ) as etc
+-- )
+
+delete p1 from person as p1 , person as p2 
+where p1.email = p2.email and p1.id >p2.id
