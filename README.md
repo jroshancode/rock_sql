@@ -89,3 +89,23 @@ https://leetcode.com/problems/delete-duplicate-emails/?envType=study-plan-v2&env
 
 delete p1 from person as p1 , person as p2 
 where p1.email = p2.email and p1.id >p2.id
+
+
+
+#2025 - 08- 06
+
+select * from train;
+-- fetch the all records and count number of records for march months.
+select *
+from train where month(`Order Date`) = 3;
+
+select * from housing_price;
+
+select count(*)
+from housing_price where SaleDate like "%March%";
+
+select count(*)
+from housing_price where  month(new_date) = 3;
+
+
+# (YouTube Sports Channels Statistics) [https://www.kaggle.com/datasets/kanchana1990/youtube-sports-channels-statistics?resource=download]
