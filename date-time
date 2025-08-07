@@ -150,6 +150,62 @@ update housing_price set new_date = str_to_date(SaleDate,"%M %d,%Y");
 select * from housing_price;
 
 
+#2025 - 08 - 07 
+select * from housing_price;
+select * from train;
+
+-- adddate , subdate, date_add , date_sub 
+
+-- comparing order date with ship date
+select * from  train 
+where date_format(`Order Date`,"%Y-%m-%d") = date_format(`Ship Date`,"%Y-%m-%d");
+
+-- for year
+select * from  train 
+where date_format(`Order Date`,"%Y") = date_format(`Ship Date`,"%Y");
+
+-- for month 
+select * from  train 
+where date_format(`Order Date`,"%m") = date_format(`Ship Date`,"%m");
+
+-- for day
+select * from  train 
+where date_format(`Order Date`,"%d") = date_format(`Ship Date`,"%d");
+
+select * from  train 
+where day(`Order Date`) = day(`Ship Date`);
+
+-- Comparing order date with ship date for 1 days
+select `Order Date`,`Ship Date`, date_add(`Order Date`,interval 1 day) from train 
+where date_add(`Order Date`,interval 1 day) = `Ship Date`;
+
+-- Comparing order date with ship date for 2 days
+select `Order Date`,`Ship Date`, date_add(`Order Date`,interval 2 day) from train 
+where date_add(`Order Date`,interval 2 day) = `Ship Date`;
+
+-- difference between 
+select datediff(now(),'2025-04-24');
+select `Order Date`,`Ship Date`,datediff(`Ship Date`,`Order Date`) as diff 
+from train ;
+
+select timediff(now(),'2025-04-24');
+select `Order Date`,`Ship Date`,timediff(`Ship Date`,`Order Date`) as diff 
+from train ;
+
+
+select `Order Date`,`Ship Date`,timediff(date_format(`Ship Date`,"%h-%i-%s"),
+date_format(`Order Date`,"%h-%i-%s") )as diff 
+from train ;
+
+-- extract 
+select extract(year from '2025-6-01'),extract(month from '2025-6-01'), extract(day from '2025-6-01'),
+extract(hour from '2025-6-01'), extract(minute from '2025-6-01') , extract(second from '2025-6-01');
+
+select extract(hour from `Order Date`) , extract(minute from `Order Date`), extract(second from `Order Date`)
+from train;
+
+select * from housing_price;
+select extract(year from SaleDate) from housing_price;
 
 
 
