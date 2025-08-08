@@ -1,0 +1,85 @@
+# Product ( entity ) 
+_Pid, _Pname , Category , price , created_at 
+
+#Customer ( Entity ) 
+id , name , email , salary, phone , address 
+
+# Order ( Entity ) 
+id , c_id, p_id ,price ,  category , create_at
+
+
+use rock_sql;
+
+-- Create parent table
+CREATE TABLE customers (
+    id INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+-- Create child table with ON DELETE and ON UPDATE CASCADE
+CREATE TABLE orders (
+    id INT PRIMARY KEY,
+    customer_id INT,
+    product VARCHAR(100),
+    FOREIGN KEY (customer_id)
+        REFERENCES customers(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+-- Insert customers
+INSERT INTO customers (id, name) VALUES
+(1, 'Alice'),
+(2, 'Bob');
+
+-- Insert orders (linked to customers)
+INSERT INTO orders (id, customer_id, product) VALUES
+(107,2,'Fashion'),
+(104, 1, 'Laptop'),
+(105, 1, 'Mouse'),
+(106, 2, 'Keyboard');
+
+-- 12:52:38	INSERT INTO orders (id, customer_id, product) 
+-- VALUES (104,3,'Fashion')	Error Code: 1452. 
+-- Cannot add or update a child row: a foreign key constraint 
+-- fails (`rock_sql`.`orders`, CONSTRAINT `orders_ibfk_1` 
+-- FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) 
+-- ON DELETE CASCADE ON UPDATE CASCADE)	0.000 sec
+
+
+select * from customers;
+select * from orders;
+
+-- 🔁 3. Cascade Example – UPDATE
+-- ✅ Change id=1 in customers → it will cascade to orders.customer_id
+
+drop table customers;
+Truncate table customers;
+
+-- truncate customers \
+-- Cannot truncate a table referenced in a foreign key constraint 
+-- (`rock_sql`.`orders`, CONSTRAINT `orders_ibfk_1`)	0.015 sec
+
+update customers set id = 5 , name ='jroshan' where id =1;
+
+select * from customers;
+select * from orders;
+
+-- customers.id changed to 5
+-- orders.customer_id changed from 1 to 10 (automatically)
+
+-- 🗑️ 4. Cascade Example – DELETE
+-- ✅ Delete id=2 from customers → related rows in orders will be deleted
+
+delete from customers where id = 2;
+
+-- Check results
+SELECT * FROM customers;
+SELECT * FROM orders;
+
+-- Bob is deleted from customers
+-- orders with customer_id=2 are automatically deleted
+
+-- ON DELETE CASCADE	Automatically deletes child rows if parent deleted
+-- ON UPDATE CASCADE	Automatically updates child FK when parent key updates
