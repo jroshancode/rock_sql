@@ -1,0 +1,61 @@
+#2025-08-12
+use rock_sql;
+
+show tables;
+select * from e_dataset;
+select * from emp_sal;
+select * from employees;
+select * from students;
+
+use my_db;
+select * from employee_data;
+select * from housing_price;
+
+-- alter table ecommerce_transactions rename e_tran
+
+-- rejex 
+select * from housing_price;
+-- fetch all OwnerName who's first letter is a or e or i or o or u
+
+-- _ ( fixed) 
+-- % ( anything ) 
+select * from housing_price 
+where OwnerName like "a%" or 
+OwnerName like "e%" or 
+OwnerName like "i%" or 
+OwnerName like "o%" or 
+OwnerName like "u%";
+
+select OwnerName from housing_price where OwnerName regexp 'p'; # search
+select OwnerName from housing_price where OwnerName regexp '^a';  # start with a 
+select OwnerName from housing_price where OwnerName regexp 'a$'; # end with a 
+select OwnerName from housing_price where OwnerName regexp 'a+'; # 1 or more 
+select OwnerName from housing_price where OwnerName regexp 'a*'; # o or more
+select OwnerName from housing_price where OwnerName regexp 'xyz';
+
+select OwnerName from housing_price where OwnerName regexp '.'; # anything 
+
+select 'abcdefghijklmnopqrstuvwxyz' regexp '[aeiou]';
+select OwnerName from housing_price where OwnerName regexp '[aeiou]';
+select OwnerName from housing_price where OwnerName regexp '[a-z]'; # range
+select OwnerName from housing_price where OwnerName regexp '[A-Z]'; # range
+
+-- start with [a-z] or [A-z] 
+
+select OwnerName from housing_price where OwnerName regexp '^[aeiou]'; # range
+select OwnerName from housing_price where OwnerName regexp '[A-Z]'; # range
+select OwnerName from housing_price where OwnerName regexp '^[a-z]'; # range
+select OwnerName from housing_price where OwnerName regexp '^[A-Z]'; # range
+
+
+-- End with [aeiou] or [a-z] or [A-Z] 
+select OwnerName from housing_price where OwnerName regexp '[aeiou]$'; # range
+select OwnerName from housing_price where OwnerName regexp '[A-Z]$'; # range
+select OwnerName from housing_price where OwnerName regexp '[a-z]$'; # range
+select OwnerName from housing_price where OwnerName regexp '^[A-Z]$'; # range
+select OwnerName from housing_price where OwnerName regexp '[p-z]$'; # range
+
+
+
+
+
