@@ -1,0 +1,175 @@
+
+
+use my_db;
+select * from employee_data;
+select * from housing_price;
+
+-- rejex 
+select * from housing_price;
+-- fetch all OwnerName who's first letter is a or e or i or o or u
+
+-- _ ( fixed) 
+-- % ( anything ) 
+select * from housing_price 
+where OwnerName like "a%" or 
+OwnerName like "e%" or 
+OwnerName like "i%" or 
+OwnerName like "o%" or 
+OwnerName like "u%";
+
+select OwnerName from housing_price where OwnerName regexp 'p'; # search
+select OwnerName from housing_price where OwnerName regexp '^a';  # start with a ( ^ (Caret) ) 
+select OwnerName from housing_price where OwnerName regexp 'a$'; # end with a ( $ (Dollar Sign): ) 
+select OwnerName from housing_price where OwnerName regexp 'a+'; # 1 or more 
+select OwnerName from housing_price where OwnerName regexp 'a*'; # o or more
+select OwnerName from housing_price where OwnerName regexp 'xyz';
+
+select OwnerName from housing_price where OwnerName regexp '.'; # anything 
+
+select 'abcdefghijklmnopqrstuvwxyz' regexp '[aeiou]';
+select OwnerName from housing_price where OwnerName regexp '[aeiou]';
+select OwnerName from housing_price where OwnerName regexp '[a-z]'; # range
+select OwnerName from housing_price where OwnerName regexp '[A-Z]'; # range
+
+-- start with [a-z] or [A-z] 
+
+select OwnerName from housing_price where OwnerName regexp '^[aeiou]'; # range
+select OwnerName from housing_price where OwnerName regexp '[A-Z]'; # range
+select OwnerName from housing_price where OwnerName regexp '^[a-z]'; # range
+select OwnerName from housing_price where OwnerName regexp '^[A-Z]'; # range
+
+
+-- End with [aeiou] or [a-z] or [A-Z] 
+select OwnerName from housing_price where OwnerName regexp '[aeiou]$'; # range
+select OwnerName from housing_price where OwnerName regexp '[A-Z]$'; # range
+select OwnerName from housing_price where OwnerName regexp '[a-z]$'; # range
+select OwnerName from housing_price where OwnerName regexp '^[A-Z]$'; # range
+select OwnerName from housing_price where OwnerName regexp '[p-z]$'; # range
+
+
+select '123Menka' regexp '^[a-zA-Z]';
+select ' 123Menka' regexp '^[a-zA-Z0-9 ]';
+
+select * from housing_price;
+-- start with a-z or A-Z 
+select * from housing_price where PropertyAddress regexp '^[a-zA-Z]';
+-- start with 0-9 
+select * from housing_price where PropertyAddress regexp '^[0-9]';
+
+-- Question and answering 
+
+select '123menka' regexp '^[a-zA-z]';
+select 'menka123' regexp '^[a-zA-z].*';
+select 'Harshit123' regexp '^[a-zA-z].*[0-9@]$';
+select 'HARSHIT123@' regexp '^[a-zA-z].*[0-9@]$';
+
+select 'Harshit123' regexp '^[a-zA-z]*[0-9@]$';
+select 'HARSHIT123@' regexp '^[a-zA-z]*[0-9@]$';
+
+select 'HARSHIT@123' regexp '^[a-zA-z].+[0-9@]$';
+select 'HARSHIT@123A' regexp '^[a-zA-z].+[0-9@]$';
+select 'HARSHIT123A@' regexp '^[a-zA-z].+[0-9@]$';
+
+select 'jroshan123' regexp '^[a-zA-z]*[0-9@]$';
+select 'jroshan123' regexp '^[a-zA-z]*[0-9]$';
+
+select '123jroshan@98' regexp '^[a-zA-z].*[0-9@]$';
+select '123jroshan@98#' regexp '^[a-zA-z].*[0-9@]$';
+
+select 'a#1' regexp '[a-zA-Z].*[0-9@]$';
+select 'a#1' regexp '^[a-zA-Z].*[0-9@]$';
+select 'a@' regexp '^[a-zA-Z]*[0-9@]$';
+select 'a123' regexp '^[a-zA-Z]*[0-9@]$';
+select 'a123@' regexp '^[a-zA-Z]*[0-9@]$';
+select '123@' regexp '^[a-zA-Z0-9].*[0-9@]$';
+
+
+-- Not 
+select 'jroshan123' regexp '^[a-zA-z].+[0-9]$';
+select 'jroshan123' regexp '^[^a-zA-z].+[0-9]$';
+select '123jroshan123' regexp '^[^a-zA-z].+[0-9]$';
+
+-- {n}: Matches exactly n occurrences.
+select 'ababab' regexp 'a{2}';
+select 'aabab' regexp 'a{2}';
+select 'abab' regexp 'ab{2}';
+
+-- {n,}: Matches at least n occurrences.
+select 'ababab' regexp 'a{2,}';
+select 'aabab' regexp 'a{2,}';
+select 'aabababc' regexp 'ab{3,}';
+select 'aababbbabc' regexp 'ab{3,}';
+
+-- {n,m}: Matches between n and m occurrences.
+select 'aaabab' regexp 'a{2,3}';
+select 'aa' regexp 'a{2,3}';
+select 'aaaabababc' regexp 'a{2,3}';
+select 'abbbababc' regexp 'ab{3,4}';
+
+-- Phone number validation ( start with 6,7,8,9  and 10 digit ) 
+select '0987654321' regexp '^[6-9]';
+select '0987654321' regexp '^[6789]';
+
+select '987654321' regexp '^[6789]';
+select '8907654321' regexp '^[6789]';
+select '7890654321' regexp '^[6789]';
+select '6789054321' regexp '^[6789]';
+
+
+select '0987654321' regexp '^[6789][0-9]';
+select '9087654321' regexp '^[6789][0-9]';
+select '90876543A1' regexp '^[6789][0-9]$';
+select '908765431A' regexp '^[6789][0-9]$';
+
+-- verified phone number
+select '9087654321' regexp '^[6789][0-9]{9}$';
+select '9087654A321' regexp '^[6789][0-9]{9}$';
+select '908765431A' regexp '^[6789][0-9]{9}$';
+
+-- start and end 
+select 'jroshan' regexp '^R.*n$';
+select 'Roshan' regexp '^R.*n$';
+
+-- start 
+select 'jroshan' regexp '.{1}r';
+
+-- only 
+select '0987654321' regexp '^[0-9]';
+select '0987654321#' regexp '^[0-9]';
+select '0987654321#' regexp '^[0-9][0-9]';
+select '0987654321#' regexp '^[0-9]+[0-9][0-9]$';
+
+select '123-456-7890' regexp '^[0-9][0-9]';
+select '123-456-7890' regexp '^[0-9][0-9-]';
+
+select '123-456-7890' regexp '^[0-9][0-9-]$';
+
+select '123-456-7890' regexp '^[0-9]+[0-9-]+[0-9]$+';
+select '123-456-7890' regexp '^[0-9]*[0-9-]*[0-9]$+';
+select '123-456-7890' regexp '^[0-9]*[0-9-]*[0-9]$*';
+
+
+select '123-456-7890' regexp '^[0-9]{3}-{1}[0-9]{3}-{1}[0-9]{4}';
+select '123-456-7890' regexp '^[123]{3}-{1}[0-9]{3}-{1}[0-9]{4}$';
+
+-- zip code 
+select '123456' regexp '^[0-9]{6}$';
+
+select 'Apple' regexp '^[Aa]pple|[Ss]amsung';
+select 'samsung' regexp '^[Aa]pple|[Ss]amsung';
+select 'Android' regexp '^[Aa]pple|[Ss]amsung';
+
+
+-- email 
+select 'menkac737@gmail.com' regexp "[a-zA-Z]+[-.A-Za-z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$";
+select 'harshitgupta98710@gmai.com' regexp "[a-zA-Z]+[-.A-Za-z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$" ;
+select 'jroshancode@gmai.com' regexp "[a-zA-Z]+[-.A-Za-z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$" ;
+select 'gitechno.in@gmail.com' regexp "[a-zA-Z]+[-.A-Za-z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,3}$";
+
+select '22cse043harshit@eitfaridabad.co.in' regexp "[a-zA-Z0-9]+[-.A-Za-z0-9]+@[a-zA-Z0-9.]+\\.[a-zA-Z]{2,3}$";
+
+select 'gitechno.in@gmail.com' regexp "[a-zA-Z]*[A-Za-z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{3}|[a-zA-Z]{2}$$";
+
+-- '^[a-z0-9._%-]+@[a-z0-9]+\\.[a-z]{2,}$
+
+select '22cse043harshit@eitfaridabad.co.in' regexp '^[a-z0-9._%-]+@[a-z0-9.]+\\.[a-z]{2,}$';
