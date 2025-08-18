@@ -1,0 +1,73 @@
+#2025 - 08 - 18
+-- 1. Data Cleaning in MySQL
+
+-- a) Handling NULLs or Missing Values
+
+-- Replace NULLs or or drop or delete records 
+
+use my_db;
+
+show tables;
+select * from e_tran;
+select * from housing_price;
+select * from train;
+select * from employee_data;
+
+-- Windows functions 
+
+-- A window function in MySQL performs a calculation across a set of table rows that are related to the current row, without grouping the results into a single row like aggregate functions do. Instead, window functions return a result for each row in the query, allowing you to perform calculations over a "window" or "frame" of rows. 
+-- Key characteristics of window functions in MySQL:-
+
+-- Calculations per row:
+-- Unlike aggregate functions (e.g., SUM(), AVG(), COUNT()) 
+-- that collapse multiple rows into a single result row, window functions produce a result for each individual row in the result set.
+
+-- Defining the "window":-
+-- The OVER clause is used to define the window or partition of rows on which the function operates. 
+-- This clause can include:
+-- PARTITION BY: Divides the result set into partitions to which the window function is applied independently.
+-- ORDER BY: Specifies the order of rows within each partition.
+-- ROWS or RANGE frame clauses: Define a smaller "frame" within the partition, relative to the current row, for the calculation.
+
+-- Types of window functions:
+-- MySQL supports various types, including:
+-- Aggregate window functions: SUM(), AVG(), COUNT(), MAX(), MIN() applied over a window.
+-- Ranking functions: ROW_NUMBER(), RANK(), DENSE_RANK(), NTILE().
+-- Value functions: LAG(), LEAD(), FIRST_VALUE(), LAST_VALUE().
+
+-- Row number , Rank , Danse rank ( ) 
+
+select * from train;
+
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales,
+row_number() over () as row_num
+from train ;
+
+-- first seven days
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales,
+row_number() over (order by `Ship Date` ) as row_num
+from train ;
+
+-- partition by Categories
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales,
+row_number() over (partition by Category) as row_num
+from train ;
+
+select * from ( 
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales,
+row_number() over (partition by Category order by `Ship Date` ) as row_num
+from train ) as t 
+where row_num <=7;
+
+-- Rank ( skip the next rows rank ) 
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales,
+row_number() over (partition by Category order by `Ship Date`) as row_n,
+rank() over (partition by Category order by `Ship Date`) as rn,
+dense_rank() over (partition by Category order by `Ship Date`) as d_rn
+from train ;
+
+
+
+
+
+
