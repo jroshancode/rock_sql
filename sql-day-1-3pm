@@ -1,0 +1,65 @@
+#2025 - 08 - 18 
+use rock_sql;
+
+show tables;
+select * from e_dataset;
+select * from emp_sal;
+select * from employees;
+select * from students;
+
+select * from e_dataset;
+
+select Payment_Method, max(`Final_Price(Rs.)`), 
+min(`Final_Price(Rs.)`), avg(`Final_Price(Rs.)`) , 
+sum(`Final_Price(Rs.)`), count(*)
+from e_dataset group by Payment_Method order by count(*) desc;
+
+-- Having 
+-- get all payment method which max prinal price is more than 490
+select Payment_Method, max(`Final_Price(Rs.)`), 
+min(`Final_Price(Rs.)`), avg(`Final_Price(Rs.)`) , 
+sum(`Final_Price(Rs.)`), count(*)
+from e_dataset group by Payment_Method having max(`Final_Price(Rs.)`)>490
+order by count(*) desc;
+
+
+-- Data -Clening 
+-- 1. Handling null value or missing values
+-- 2. Replace null value , or drop , delete records
+-- 3. Remove duplicated 
+
+select * from e_dataset;
+-- checek null values 
+select count(*) from e_dataset where Category is not null;
+select count(*) from e_dataset where Category is null;
+
+-- check for duplicated 
+select Payment_Method, count(*) 
+from e_dataset group by Payment_Method having count(*) >1
+
+-- Write a solution to delete all duplicate emails, 
+-- keeping only one unique email with the smallest id.
+
+with CTE as ( 
+    select email, min(id) as id from Person group by email
+)
+delete from Person where id not in(select id from CTE)
+
+-- Delete duplicates keep only one row 
+
+-- Fixing Formating Issues, Convert into lowercase or uppercase
+-- stirng function , date time , math , 
+
+-- Data Handling 
+-- CRUD ( create, read, upated and delete ) 
+
+select * from students;
+-- update students' name and email for status B1
+update students set _name ='abc' , _email = 'abc@gmail.com' where _status ='B1';
+-- count number of records updated '
+select count(*) from students where _name ='abc';
+
+-- standardizing data 
+update emp 
+set country ="United State" 
+where country in("USA",'U.S.A',"US","united state of americas","America") 
