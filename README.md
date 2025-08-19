@@ -117,4 +117,6 @@ from housing_price where  month(new_date) = 3;
 
 
 # 2025 - 08 - 19 
-https://leetcode.com/problems/find-total-time-spent-by-each-employee/description/
+1. https://leetcode.com/problems/find-total-time-spent-by-each-employee/description/
+2. https://leetcode.com/problems/game-play-analysis-i/description/
+3. https://leetcode.com/problems/game-play-analysis-iv/description/
