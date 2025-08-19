@@ -1,0 +1,40 @@
+#2025 - 08 -19 
+select * from employee_data;
+
+-- Fetch top 7 days records for each EmployeeType
+select * from (
+select StartDate, EmployeeClassificationType , DepartmentType , Division, EmployeeType,
+row_number() over(partition by EmployeeType order by StartDate) as row_num
+from employee_data 
+) as etc 
+where row_num <=7;
+
+
+-- Fetch top 7 days records for each DepartmentType and Division
+select * from (
+select StartDate, EmployeeClassificationType , DepartmentType , Division, EmployeeType,DOB,
+row_number() over(partition by EmployeeType , Division order by StartDate asc ,DOB desc) as num_row
+from employee_data 
+) as etc 
+where num_row <=7;
+
+select * from train;
+-- max , min ,avg, count,sum
+-- Fetch Top 7 days total sales for each Categories
+-- Running Total ( Cumulative Sum or Avg ) 
+with CTE as ( 
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales, 
+sum(Sales) over(partition by Category order by Sales       ) as total_sales,
+row_number()over(partition by Category order by Sales ) as row_num
+from train ) 
+select * from CTE where row_num<= 7 ;
+
+
+select `Ship Date`,`Ship Mode`,Segment,Region, Category, `Sub-Category`, Sales, 
+sum(Sales) over(partition by Category order by Sales) as total_sales,
+avg(Sales) over(partition by Category order by Sales) as avg_sales,
+count(*)over(partition by Category order by Sales) as total_count,
+max(Sales) over(partition by Category order by Sales) as max_sales,
+min(Sales) over(partition by Category order by Sales) as min_sales,
+row_number()over(partition by Category order by Sales ) as row_num
+from train ;
