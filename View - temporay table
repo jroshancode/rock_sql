@@ -1,0 +1,36 @@
+use rock_sql;
+
+
+select * from orders;
+select * from employees;
+
+
+-- temporay teble 
+create temporary table abc( 
+select * from my_db.housing_price
+) ;
+
+describe abc;
+select * from abc;
+
+
+-- A view is a virtual table that is based on the result-set of a SELECT statement. It does not store data itself but instead acts as a stored query that, when invoked, produces a result set from one or more underlying base tables. 
+-- Here are the key characteristics and benefits of MySQL views:
+-- rtual Table:
+-- views behave like regular tables, allowing users to query them using SELECT statements, but they do not physically store data.
+Stored Query:
+A view definition encapsulates a SELECT query. When you query the view, MySQL executes this underlying query to retrieve the data.
+
+
+drop view if exists orders_recods ;
+
+create or replace view orders_recods as ( 
+select o.*,e.* 
+from employees as e join Orders as o  
+on o.customer_id = e.EmpId 
+where e.salary >= 35000
+) ;
+
+select * from orders_recods;
+
+
