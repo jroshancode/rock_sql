@@ -1,0 +1,84 @@
+# 2025 - 08 - 26 
+
+use rock_sql;
+show tables;
+
+select * from emp_sal;
+select * from customers;
+select * from orders;
+
+-- START TRANSACTION
+-- (or BEGIN or BEGIN WORK): This command initiates a new transaction. 
+-- All subsequent DML (Data Manipulation Language) statements (like INSERT, UPDATE, DELETE) 
+-- will be considered part of this transaction until a COMMIT or ROLLBACK command is issued.
+
+1. COMMIT:
+Makes changes permanent
+Ends current transaction
+Releases locks
+Can't be rolled back
+
+-- Saves all changes permanently
+COMMIT;
+
+-- commit 
+select * from emp_sal;
+
+-- insert, update, delete 
+start transaction;
+update emp_sal set salary=20000 where year = 2025;
+commit;
+
+2. ROLLBACK:
+Cancels all changes since last COMMIT
+Releases locks
+Ends transaction
+
+-- Undoes all changes since last COMMIT
+ROLLBACK;
+
+-- Error handling 
+
+start transaction;
+update emp_sal set salary = salary + 120 where EmpId % 2=0;
+update emp_sal set salary = salary + 200 where EmpId % 2!=;
+
+-- if occur error 
+rollback;
+
+--  if no error 
+commit ;
+
+select * from emp_sal;
+
+
+-- Save points
+3. SAVEPOINT:
+Creates markers within transaction
+Allows partial rollbacks
+Multiple savepoints possible
+
+-- Creates a point to roll back to
+
+start transaction;
+
+savepoint emp_inserted;
+insert into emp_sal(EmpID,salary,Year)
+values(105,18000,2025),(106,15000,2025);
+
+savepoint testing;
+
+savepoint emp_updated;
+update emp_sal set salary = salary + 500 where EmpId % 2=0;
+update emp_sal set salary = salary - 500 where EmpId % 2!=0;
+
+savepoint emp_delete;
+delete from emp_sal where EmpID = 1;
+
+-- problem detected , rollback to specific point 
+-- rollback to emp_updated;
+rollback to emp_delete;
+commit ;
+
+select * from emp_sal;
+
