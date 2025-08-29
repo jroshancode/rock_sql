@@ -1,0 +1,52 @@
+# 2025 - 08 - 29 
+Data Control Language (DCL)
+
+-- 1. Data Control Language (DCL) is used to control access 
+-- and manage user permissions within a database. 
+
+DCL in MySQL stands for Data Control Language. It is a subset of SQL commands specifically designed to manage permissions and control access to database objects and data. DCL commands are crucial for maintaining database security and ensuring that only authorized users can perform specific actions on the database.
+The primary DCL commands in MySQL are:
+
+GRANT: This command is used to give specific privileges to a user or role on a particular database object (like a table, view, or database). For example, you can grant SELECT, INSERT, UPDATE, or DELETE privileges on a table to a user.
+
+1. GRANT SELECT, INSERT ON mydatabase.mytable TO 'myuser'@'localhost';
+2. REVOKE: This command is used to remove or withdraw previously granted privileges from a user or role.
+
+DCL commands are essential for database administrators to manage user access, define roles, and enforce security policies within a MySQL database system. <br>
+1. username: The desired name for the new user.
+2. host: Specifies the host from which the user can connect. This can be:
+3. 'localhost': The user can only connect from the same machine where the MySQL server is running.
+4. '%': The user can connect from any host (not recommended for security reasons in production environments without further restrictions).
+5. 'specific_ip_address': The user can only connect from a specific IP address (e.g., '192.168.1.100').
+6. password: The password for the new user account. It is crucial to use strong, secure passwords.
+
+
+use rock_sql;
+
+create table testing as (
+select * from e_dataset
+)
+
+select * from testing;
+
+-- Examples of CREATE USER:
+1. CREATE USER 'john'@'localhost' IDENTIFIED BY 'SecurePass123!';
+2. CREATE USER 'sarah'@'%' IDENTIFIED BY 'MyPassword456!';
+3. CREATE USER 'admin'@'192.168.1.100' IDENTIFIED BY 'AdminPass789!';
+
+CREATE USER 'myuser'@'host' IDENTIFIED BY 'git@123';
+
+GRANT ALL PRIVILEGES ON rock_sql.testing TO 'myuser'@'host';
+
+CREATE USER 'sarah'@'%' IDENTIFIED BY 'MyPassword456!';
+
+GRANT SELECT, INSERT ON rock_sql.testing TO 'sarah'@'%'
+
+
+1. 'username': The desired username for the new account.
+2. 'host': Specifies the host from which the user can connect. Common values include:
+3. 'localhost': User can only connect from the same machine where MySQL is running.
+4. '%': User can connect from any host (not recommended for security reasons unless strictly necessary).
+5. 'IP_address': User can connect from a specific IP address (e.g., '192.168.1.100').
+
+
